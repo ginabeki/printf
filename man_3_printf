@@ -1,63 +1,102 @@
-.\" Manpage for _printf borrowed from the actual printf(3) manual page and may contain some unforeseen errors.
-.TH man 8 "23 October 2018" "1.0" "_printf man page"
+.TH man 3 "14 April 2022" "ALX PROGRAMME" "_PRINTF"
 .SH NAME
-_printf - format and write a string, character, or integer to stdout
+.B _printf
+- formatted output conversion
 .SH SYNOPSIS
-#include "main.h"
-.br
-#include <stdarg.h>
-.br
-#include <stdlib.h>
-.br
-.br
-int _printf(const char *format, ...)
-
+.B #include \(dqmain.h\(dq
+.sp
+.B int _printf(const char *
+.I format
+.B , ...);
 .SH DESCRIPTION
-The function _printf() produces output according to a format as described below. The functions printf() writes output to stdout, the standard output stream.
-
-.SS Return value
-Upon successful return, these functions return the number of characters
-printed (excluding the null byte used to end output to strings).
-
-If an output error is encountered, a negative value is returned.
-
-.SS The format string:
-.br
-The format string is a character string, composed of zero or more directives: ordinary characters (not %), which are copied unchanged to the output stream. Each conversion specification is introduced by the character %, and ends with the conversion specifier.
-
-.SS The conversion specifiers:
-.br
-A character that specifies the type of conversion to be applied. The conversion specifier and their meanings are:
-.br
-d, i - The int argument is converted to signed decimal notation.
-.br
-c -  The int argument is converted to an unsigned char, and the resulting character is written.
-.br
-s -  The const char * argument is expected to be a pointer to an array of character type (pointer to a string).
-
-.SH EXAMPLE
-.br
-Print a string literal:
-.br
-int a = 0;
-.br
-char *a_string = "cat";
-.br
-a = _printf("test %s\n", a_string);
-.br
-printf("%d\n", a);
-.br
-return (0);
-.br
-.SS General Formatting:
-.br
-_printf("example format string [ % [ (c) (s) (d) (i) ]]", [variable] [string literal)
-.br
+The function _printf is a variadic function that produces a string according to a
+.I format
+and prints it to the standard output, much like the C standard library function printf. It can receive a variable number of arguments.
+This function has been created in the context of a first-year project for Holberton School.
+.sp
+.B Return value
+.sp
+On success, _printf returns the number of characters printed. If
+.I format
+is NULL or if the functions encounters any errors, it returns -1.
+.sp
+.B Format of the format string
+.sp
+The format string can contain any characters, just like a regular string, in double quotes, which will be printed as is. For example, _printf(\(dqHello\(dq) will print: Hello.
+However, this format string can contain
+.I conversion specifiers.
+These start with a %, and are followed with a character (see
+.I conversion specifiers
+). Special characters like a new line are escaped, for example _printf(\(dq\\n\(dq) will print a new line.
+.sp
+.B Conversion specifiers
+.sp
+These are the characters that specify the type of the variable that needs to be printed. The variables to be printed are separated from the format string with a comma. Each variable passed to _printf need to have a conversion specifier.
+.sp
+.B i, d
+- Both these specifiers are for
+.I int
+arguments. They convert the variable to a decimal number, positive or negative.
+.sp
+.B c
+- Prints a
+.I single character.
+.sp
+.B s
+- Prints an entire
+.I string.
+.sp
+.B u
+- Prints an
+.I unsigned int.
+.sp
+.B x, X
+- Respecively print a number in lowercase and uppercase
+.I hexadecimal
+base.
+.sp
+.B o, b
+- Respectively print a number in
+.I octal
+and
+.I binary
+base.
+.sp
+.B %
+- Acts like an escape for the character %. To print \(dq%\(dq, the format string should contain \(dq%%\(dq.
+.sp
+.B r, R
+- Respectively print a string in reverse and in ROT13 encryption.
+.sp
+.B S
+- Prints a string, but non-printable characters are printed this way: \\x, followed by the ASCII code value in uppercase hexadecimal.
+.sp
+.B p
+- Prints an address, given by a pointer variable
+.sp
+.B Flag characters for conversion specifiers
+.sp
+.B +
+- Prints a plus sign in front of positive signed integers and a minus sign in front of negative signed integers.
+ + overrides a space when both flags are given.
+.sp
+.B ' '
+- Prints a space in front of signed integers.
+.sp
+.B #
+- Modifier for unsigned conversions. For x, prepends \(dq0x\(dq, and for X, prepends \(dq0X\(dq. For o, if the converted number doesn't already begin with a 0, prepends a 0.
+.sp
 .SH SEE ALSO
-printf(1), asprintf(3), dprintf(3), scanf(3)
-.br
+.I printf(3)
+.I _putchar.c
+.SH NOTES
+_printf uses a custom character printing function called _putchar, that uses the system call write(). 
+_putchar uses a static buffer of 1024 bytes and a static incrementing variable. 
+That way, everytime _putchar is called inside _printf, the character is stored inside the buffer and the function moves to the next character, 
+until _printf calls _putchar(-1), which \(dqflushes\(dq the buffer and resets the incrementing variable to 0. 
+That way, _putchar only needs to call write one time, passing to it the whole buffer and the number of bytes in it, which is given by the value of the incrementing variable.
+.sp
 .SH BUGS
-No known bugs so far.
-.SS COLOPHON
-.br
-This page was borrowed from the actual printf manual page.
+_printf does not take care of length and precision modifiers yet. For example, _printf(\(dq%hx\(dq) will not produce the same output as the call to the standard library printf.
+.SH AUTHORS
+gina beki and Chrisokwisa
