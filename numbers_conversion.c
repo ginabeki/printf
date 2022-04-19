@@ -14,6 +14,7 @@ unsigned int convert_o(va_list args, buffer_t *output,
  *              stores it to a buffer contained in a struct.
  * @args: A va_list pointing to the argument to be converted.
  * @flags: Flag modifiers.
+ *
  * @wid: A width modifier.
  * @prec: A precision modifier.
  * @len: A length modifier.
