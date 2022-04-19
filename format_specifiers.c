@@ -2,6 +2,7 @@
 /**
  * print_char - Prints character
  * _putchar - prints string to stdout
+ *
  * @list: list of arguments
  * Return: Will return the amount of characters printed.
  */
