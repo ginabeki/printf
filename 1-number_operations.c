@@ -2,6 +2,7 @@
 
 /**
 * print_d - Print decimal (Base 10) digits (%d)
+*
 * @ar_list: Store the value of arguments
 * Return: Counter print numbers
 */
