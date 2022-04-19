@@ -14,6 +14,7 @@ unsigned int convert_ubase(buffer_t *output,
  * @base: A pointer to a string containing the base to convert to.
  * @flags: Flag modifiers.
  * @wid: A width modifier.
+ *
  * @prec: A precision modifier.
  *
  * Return: The number of bytes stored to the buffer.
