@@ -1,41 +1,47 @@
 #include "main.h"
-
 /**
- * print_b - Convert of decimals in binary
- * @binary_list: Store the argumen values
- * Return: The count
- */
-
-int print_b(va_list binary_list)
+* _printf - main function to print in console
+* @format: array to print and check type
+* Return: count of character printed
+**/
+int _printf(const char *format, ...)
 {
-	unsigned int i, count, Num, binary, arr[32];
+	int count = -1;
 
-	i = 0, count = 0;
-	Num = va_arg(binary_list, int);
+	if (format != NULL)
+	{
+		int i;
+		va_list ar_list;
+		int (*o)(va_list);
 
-	if (Num < 1)
-	{
-	_write_char(48);
-		count++;
-		return (count);
-	}
-	else
-	{
-		while (Num > 0)
+		va_start(ar_list, format);
+
+		if (format[0] == '%' && format[1] == '\0')
+			return (-1);
+
+		count = 0;
+
+		for (i = 0; format[i] != '\0'; i++)
 		{
-			binary = Num % 2;
-			Num /= 2;
-			arr[count] = binary;
-			count++;
+			if (format[i] == '%')
+			{
+				if (format[i + 1] == '%')
+				{
+					count += _putchar(format[i]);
+					i++;
+				}
+				else if (format[i + 1] != '\0')
+				{
+					o = get_func(format[i + 1]);
+					count += (o ? o(ar_list) : _putchar(format[i]) + _putchar(format[i + 1]));
+					i++;
+				}
+			}
+			else
+				count += _putchar(format[i]);
 		}
-		i = count - 1;
-		while (i > 0)
-		{
-			_write_char('0' + arr[i]);
-			i--;
-		}
-		_write_char('0' + arr[i]);
+		va_end(ar_list);
 	}
+
 	return (count);
 }
-
