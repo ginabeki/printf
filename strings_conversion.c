@@ -16,6 +16,7 @@ unsigned int convert_R(va_list args, buffer_t *output,
  * @flags: Flag modifiers.
  * @wid: A width modifier.
  * @prec: A precision modifier.
+ *
  * @len: A length modifier.
  * @output: A buffer_t struct containing a character array.
  *
